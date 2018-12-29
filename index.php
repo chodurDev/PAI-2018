@@ -1,37 +1,19 @@
-<?php
+<!DOCTYPE html>
+<html>
 
-class User{
-    private $name;
-    private $surname;
-    private $email;
-    private $password;
+<head>
+    <title>44 Detailing-CRM</title>
+    <link rel="stylesheet" type="text/css" href="public/css/style.css" />
 
+</head>
 
-    public function __construct(string $name,string $password){
-        $this->name=$name;
-        $this->password=md5($password);
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name):void
-    {
-        $this->name=$name;
-    }
-
-    public function setPassword($password):void
-    {
-        $this->password=md5($password);
-    }
-} 
-
-$user=new User(name:'kamil',password:'secret');
+<body>
+<div>
+    <form action="login.php" method="post">
+        <input class="button-start" type="submit" value="">
+    </form>
+</div>
 
 
-
-
-
-?>
+</body>
+</html>
