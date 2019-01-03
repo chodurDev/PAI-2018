@@ -19,10 +19,10 @@ class UserMapper
             $stmt->execute();
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            return new User($user['name'], $user['surname'], $user['email'], $user['password']);
+            return new User($user['name'], $user['surname'], $user['email'], $user['password'], $user['role']);
         }
         catch(PDOException $e) {
-            return 'Error: ' . $e->getMessage();
+            die( 'sie nie udało: ' . $e->getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ class UserMapper
             return $user;
         }
         catch(PDOException $e) {
-            die("sie nie udało :(");
+            die( 'sie nie udało: ' . $e->getMessage());
         }
     }
 

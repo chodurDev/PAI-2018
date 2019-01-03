@@ -32,7 +32,7 @@ class DefaultController extends AppController
             $user = $mapper->getUser($_POST['email']);
 
             if(!$user) {
-                return $this->render('login', ['message' => ['Login not recognized']]);
+                return $this->render('login', ['message' => ['Email not recognized']]);
             }
 
             if ($user->getPassword() !== $_POST['password']) {
@@ -42,8 +42,18 @@ class DefaultController extends AppController
                 $_SESSION["role"] = $user->getRole();
 
                 $url = "http://$_SERVER[HTTP_HOST]/";
-                header("Location: {$url}?page=index");
+
+
+
+                if($_SESSION["role"]=="admin") {
+                    header("Location: {$url}?page=admin");
+
+                }else{
+                    header("Location: {$url}?page=index");
+                }
+
                 exit();
+
             }
         }
 

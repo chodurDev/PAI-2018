@@ -6,7 +6,7 @@
 
 <body>
 <div>
-    <center>strona pracownicza</center>
+    <center>strona ADMINA</center>
 </div>
 
 
