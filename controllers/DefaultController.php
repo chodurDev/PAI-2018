@@ -20,6 +20,11 @@ class DefaultController extends AppController
 
         $this->render('index', ['text' => $text]);
     }
+    public function start(){
+        $text = '';
+        $this->render('start', ['text' => $text]);
+
+    }
 
     public function login()
     {
@@ -27,7 +32,7 @@ class DefaultController extends AppController
 
         $user = null;
 
-        if ($this->isPost()  ){
+        if ($this->isPost() && isset($_POST['email'])){
 
             $user = $mapper->getUser($_POST['email']);
 

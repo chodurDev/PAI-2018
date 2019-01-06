@@ -17,6 +17,22 @@ class AdminController extends AppController
         $this->render('index', ['user' => $user->getUser($_SESSION['id'])]);
     }
 
+    public function adminCRM():void
+    {
+        $user = new UserMapper();
+        $this->render('adminCRM', ['user' => $user->getUser($_SESSION['id'])]);
+    }
+    public function adminRaport():void
+    {
+        $user = new UserMapper();
+        $this->render('adminRaport', ['user' => $user->getUser($_SESSION['id'])]);
+    }
+    public function adminNiezaplacone():void
+    {
+        $user = new UserMapper();
+        $this->render('adminNiezaplacone', ['user' => $user->getUser($_SESSION['id'])]);
+    }
+
     public function users(): void
     {
         $user = new UserMapper();
