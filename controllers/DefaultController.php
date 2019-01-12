@@ -43,7 +43,7 @@ class DefaultController extends AppController
             if ($user->getPassword() !== $_POST['password']) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
-                $_SESSION["id"] = $user->getEmail();
+                $_SESSION["id"] = $user->getId();
                 $_SESSION["role"] = $user->getRole();
 
                 $url = "http://$_SERVER[HTTP_HOST]/";

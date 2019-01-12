@@ -3,6 +3,8 @@ require_once 'AppController.php';
 
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
+require_once __DIR__.'/../model/Samochod.php';
+require_once __DIR__.'/../model/SamochodMapper.php';
 
 class AdminController extends AppController
 {
@@ -32,6 +34,8 @@ class AdminController extends AppController
         $user = new UserMapper();
         $this->render('adminNiezaplacone', ['user' => $user->getUser($_SESSION['id'])]);
     }
+    //--------------------------------------
+
 
     public function users(): void
     {

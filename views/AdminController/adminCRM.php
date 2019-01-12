@@ -4,9 +4,8 @@
 <?php include(dirname(__DIR__).'/head.html'); ?>
 
 
-<body>
-<center><div>CRM</div></center>
-
+<body id="crm">
+<center><div id="container"></div></center>
 
 </body>
-</html>/
+</html>

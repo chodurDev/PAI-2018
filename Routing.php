@@ -47,10 +47,15 @@ class Routing
                 'controller' => 'AdminController',
                 'action' => 'adminRaport'
             ],
+            'admin_samochod' => [
+                'controller' => 'AdminController',
+                'action' => 'samochody'
+            ],
             'adminNiezaplacone' => [
                 'controller' => 'AdminController',
                 'action' => 'adminNiezaplacone'
             ]
+
         ];
     }
 

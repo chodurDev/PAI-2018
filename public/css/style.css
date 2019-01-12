@@ -26,3 +26,9 @@ form.hide-submit input[type="submit"]
     display: none;
 }
 
+#container{
+
+    size: auto;
+
+}
+
