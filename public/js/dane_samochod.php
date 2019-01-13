@@ -12,6 +12,7 @@ require_once ('../../model/SamochodMapper.php');
 $samochod = new SamochodMapper();
 
 
+
 //header('Content-type: application/json');
 //http_response_code(200);
 

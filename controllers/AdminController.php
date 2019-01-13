@@ -5,6 +5,8 @@ require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
 require_once __DIR__.'/../model/Samochod.php';
 require_once __DIR__.'/../model/SamochodMapper.php';
+require_once __DIR__.'/../model/Usluga.php';
+require_once __DIR__.'/../model/UslugaMapper.php';
 
 class AdminController extends AppController
 {
@@ -22,7 +24,8 @@ class AdminController extends AppController
     public function adminCRM():void
     {
         $user = new UserMapper();
-        $this->render('adminCRM', ['user' => $user->getUser($_SESSION['id'])]);
+        $usluga=new UslugaMapper();
+        $this->render('adminCRM', ['user' => $user->getUser($_SESSION['id']),'usluga'=>$usluga->getUslugi()]);
     }
     public function adminRaport():void
     {
@@ -37,14 +40,14 @@ class AdminController extends AppController
     //--------------------------------------
 
 
-    public function users(): void
+    public function uslugi(): void
     {
-        $user = new UserMapper();
+        $uslugi = new UslugaMapper();
 
         header('Content-type: application/json');
         http_response_code(200);
 
-        echo $user->getUsers() ? json_encode($user->getUsers()) : '';
+        echo $uslugi->getUslugi() ? json_encode($uslugi->getUslugi()) : '';
     }
 
     public function userDelete(): void

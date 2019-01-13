@@ -47,9 +47,9 @@ class Routing
                 'controller' => 'AdminController',
                 'action' => 'adminRaport'
             ],
-            'admin_samochod' => [
+            'admin_uslugi' => [
                 'controller' => 'AdminController',
-                'action' => 'samochody'
+                'action' => 'uslugi'
             ],
             'adminNiezaplacone' => [
                 'controller' => 'AdminController',
