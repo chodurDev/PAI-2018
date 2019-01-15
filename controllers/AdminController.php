@@ -24,8 +24,8 @@ class AdminController extends AppController
     public function adminCRM():void
     {
         $user = new UserMapper();
-        $usluga=new UslugaMapper();
-        $this->render('adminCRM', ['user' => $user->getUser($_SESSION['id']),'usluga'=>$usluga->getUslugi()]);
+
+        $this->render('adminCRM', ['user' => $user->getUser($_SESSION['id'])]);
     }
     public function adminRaport():void
     {
@@ -47,7 +47,11 @@ class AdminController extends AppController
         header('Content-type: application/json');
         http_response_code(200);
 
-        echo $uslugi->getUslugi() ? json_encode($uslugi->getUslugi()) : '';
+        //echo $uslugi->getUslugi() ? json_encode($uslugi->getUslugi()) : '';
+        foreach ($uslugi->getUslugi() as $el) {
+            echo json_encode($el);
+
+        }
     }
 
     public function userDelete(): void

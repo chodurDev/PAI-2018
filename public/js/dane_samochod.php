@@ -8,15 +8,26 @@
  */
 require_once ('../../model/Samochod.php');
 require_once ('../../model/SamochodMapper.php');
+require_once ('../../model/UslugaMapper.php');
+
 
 $samochod = new SamochodMapper();
+$usluga = new UslugaMapper();
 
 
 
-//header('Content-type: application/json');
-//http_response_code(200);
+header('Content-type: application/json');
+http_response_code(200);
 
 
-foreach ($samochod->getSamochod() as $el) {
-    echo json_encode($el),'<br>';
-}
+
+    echo 'data:'.json_encode($samochod->getSamochod());
+
+
+//foreach ($usluga->getUslugi() as $el) {
+//    echo json_encode($el),'<br>';
+//
+//}
+//print_r($usluga->getUslugi());
+//echo '--------------------';
+//echo $usluga->getUslugi() ? json_encode($usluga->getUslugi()) : '';
