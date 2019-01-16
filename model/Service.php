@@ -1,13 +1,13 @@
 <?php
 
-class Usluga
+class Service
 {
     private $id;
     private $imie;
     private $nazwisko;
     private $samochod_marka;
     private $samochod_model;
-    private $rodzaj_uslugi;
+    private $rodzaj_services;
     private $cena;
     private $Zaplacone;
     private $rodzaj_platnosci;
@@ -17,14 +17,14 @@ class Usluga
     private $data_wykonania;
 
 
-    public function __construct($id, $imie, $nazwisko, $samochod_marka, $samochod_model, $rodzaj_uslugi, $cena, $Zaplacone, $rodzaj_platnosci, $nip, $email, $uwagi, $data_wykonania)
+    public function __construct($id, $imie, $nazwisko, $samochod_marka, $samochod_model, $rodzaj_services, $cena, $Zaplacone, $rodzaj_platnosci, $nip, $email, $uwagi, $data_wykonania)
     {
         $this->id = $id;
         $this->imie = $imie;
         $this->nazwisko = $nazwisko;
         $this->samochod_marka = $samochod_marka;
         $this->samochod_model = $samochod_model;
-        $this->rodzaj_uslugi = $rodzaj_uslugi;
+        $this->rodzaj_services = $rodzaj_services;
         $this->cena = $cena;
         $this->zaplacone = $Zaplacone;
         $this->rodzaj_platnosci = $rodzaj_platnosci;
@@ -84,7 +84,7 @@ class Usluga
     /**
      * @return mixed
      */
-    public function getSamochodMarka()
+    public function getCarMarka()
     {
         return $this->samochod_marka;
     }
@@ -100,7 +100,7 @@ class Usluga
     /**
      * @return mixed
      */
-    public function getSamochodModel()
+    public function getCarModel()
     {
         return $this->samochod_model;
     }
@@ -116,17 +116,17 @@ class Usluga
     /**
      * @return mixed
      */
-    public function getRodzajUslugi()
+    public function getRodzajservices()
     {
-        return $this->rodzaj_uslugi;
+        return $this->rodzaj_services;
     }
 
     /**
-     * @param mixed $rodzaj_uslugi
+     * @param mixed $rodzaj_services
      */
-    public function setRodzajUslugi($rodzaj_uslugi): void
+    public function setRodzajservices($rodzaj_services): void
     {
-        $this->rodzaj_uslugi = $rodzaj_uslugi;
+        $this->rodzaj_services = $rodzaj_services;
     }
 
     /**

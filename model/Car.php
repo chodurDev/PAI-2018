@@ -6,7 +6,7 @@
  * Time: 20:26
  */
 
-class Samochod
+class Car
 {
 
     private $id;

@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function() {
         data: {
             proxy: {
                 type: 'rest',
-                read:'POST',
-                url: '?page=admin_uslugi'
+                read:'GET',
+                url: '?page=admin_services'
             }
         },
         tbar: [{
@@ -44,13 +44,27 @@ document.addEventListener("DOMContentLoaded", function() {
             title: 'Marka',
             index: 'marka',
             width: 100,
-            type:'combo'
+            type:'combo',
+            data: {
+                proxy: {
+                    type: 'rest',
+                    read:'GET',
+                    url: 'DataCarMarka.php'
+                }
+            }
 
         },{
             title: 'Model',
             index: 'model',
             width: 100,
-            type:'combo'
+            type:'combo',
+            data: {
+                proxy: {
+                    type: 'rest',
+                    read:'GET',
+                    url: 'DataCarMarka.php'
+                }
+            }
 
         },{
             title: 'Rodzaj usługi',

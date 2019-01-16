@@ -30,7 +30,7 @@
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
             <h2>NIEZAPŁACONE</h2>
-            <form action="?page=adminNiezaplacone" class="hide-submit" method="post">
+            <form action="?page=adminUnregulated" class="hide-submit" method="post">
                 <label>
                     <input type="submit"/>
                     <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="button" aria-label="Placeholder: 140x140"><image xlink:href="http://mrmeble.pl/wp-content/uploads/2015/10/wp_pieniadze_monety_oszczednosci_600.jpeg" height="140px" width="140px"/></svg>

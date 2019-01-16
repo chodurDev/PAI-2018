@@ -47,13 +47,13 @@ class Routing
                 'controller' => 'AdminController',
                 'action' => 'adminRaport'
             ],
-            'admin_uslugi' => [
+            'admin_services' => [
                 'controller' => 'AdminController',
-                'action' => 'uslugi'
+                'action' => 'services'
             ],
-            'adminNiezaplacone' => [
+            'adminUnregulated' => [
                 'controller' => 'AdminController',
-                'action' => 'adminNiezaplacone'
+                'action' => 'adminUnregulated'
             ]
 
         ];

@@ -1,12 +1,13 @@
 <?php
 require_once 'AppController.php';
 
+require_once 'outputTableJSON.php';
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
-require_once __DIR__.'/../model/Samochod.php';
-require_once __DIR__.'/../model/SamochodMapper.php';
-require_once __DIR__.'/../model/Usluga.php';
-require_once __DIR__.'/../model/UslugaMapper.php';
+require_once __DIR__ . '/../model/Car.php';
+require_once __DIR__ . '/../model/CarMapper.php';
+require_once __DIR__ . '/../model/Service.php';
+require_once __DIR__ . '/../model/ServiceMapper.php';
 
 class AdminController extends AppController
 {
@@ -32,26 +33,23 @@ class AdminController extends AppController
         $user = new UserMapper();
         $this->render('adminRaport', ['user' => $user->getUser($_SESSION['id'])]);
     }
-    public function adminNiezaplacone():void
+    public function adminUnregulated():void
     {
         $user = new UserMapper();
-        $this->render('adminNiezaplacone', ['user' => $user->getUser($_SESSION['id'])]);
+        $this->render('adminUnregulated', ['user' => $user->getUser($_SESSION['id'])]);
     }
     //--------------------------------------
 
 
-    public function uslugi(): void
+    /**
+     *
+     */
+    public function services(): void
     {
-        $uslugi = new UslugaMapper();
-
+        $services = new ServiceMapper();
         header('Content-type: application/json');
         http_response_code(200);
-
-        //echo $uslugi->getUslugi() ? json_encode($uslugi->getUslugi()) : '';
-        foreach ($uslugi->getUslugi() as $el) {
-            echo json_encode($el);
-
-        }
+        output($services->getServices());
     }
 
     public function userDelete(): void
