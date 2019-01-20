@@ -26,7 +26,7 @@ class Service
         $this->samochod_model = $samochod_model;
         $this->rodzaj_services = $rodzaj_services;
         $this->cena = $cena;
-        $this->zaplacone = $Zaplacone;
+        $this->Zaplacone = $Zaplacone;
         $this->rodzaj_platnosci = $rodzaj_platnosci;
         $this->nip = $nip;
         $this->email = $email;
@@ -92,7 +92,7 @@ class Service
     /**
      * @param mixed $samochod_marka
      */
-    public function setSamochodMarka($samochod_marka): void
+    public function setCarMarka($samochod_marka): void
     {
         $this->samochod_marka = $samochod_marka;
     }
@@ -108,7 +108,7 @@ class Service
     /**
      * @param mixed $samochod_model
      */
-    public function setSamochodModel($samochod_model): void
+    public function setCarModel($samochod_model): void
     {
         $this->samochod_model = $samochod_model;
     }

@@ -8,12 +8,12 @@
  */
 require_once('../../model/Car.php');
 require_once('../../model/CarMapper.php');
-require_once ('outputTableJSON.php');
+require_once ('../../outputTableJSON.php');
 
 
 $carMarka = new CarMapper();
 
-header('Content-type: application/json');
+header('Content-type: text/javascript');
 http_response_code(200);
 
 output($carMarka->getMarka());

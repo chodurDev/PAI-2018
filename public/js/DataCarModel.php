@@ -8,7 +8,7 @@
  */
 require_once('../../model/Car.php');
 require_once('../../model/CarMapper.php');
-require_once ('outputTableJSON.php');
+require_once ('../../outputTableJSON.php');
 
 
 $carModel = new CarMapper();
@@ -16,4 +16,6 @@ $carModel = new CarMapper();
 header('Content-type: application/json');
 http_response_code(200);
 
-output($carModel->getModel());
+//output($carModel->getModel());
+
+

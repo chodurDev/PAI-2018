@@ -1,24 +1,84 @@
+var grid;
+format = function date2str(x, y) {
+    var z = {
+        M: x.getMonth() + 1,
+        d: x.getDate(),
+        h: x.getHours(),
+        m: x.getMinutes(),
+        s: x.getSeconds()
+    };
+    y = y.replace(/(M+|d+|h+|m+|s+)/g, function(v) {
+        return ((v.length > 1 ? "0" : "") + eval('z.' + v.slice(-1))).slice(-2)
+    });
+
+    return y.replace(/(y+)/g, function(v) {
+        return x.getFullYear().toString().slice(-v.length)
+    });
+}
+
+
+function lessDate(){
+    var outputStringDate = document.getElementById("dateExecution").value
+    var previousDay=new Date(outputStringDate);
+    previousDay.setDate(previousDay.getDate() - 1);
+    document.getElementById("dateExecution").value=format(previousDay,'yyyy-MM-dd');
+    grid.addFilter('data_wykonania',format(previousDay,'yyyy-MM-dd') , '=');
+
+}
+
+function moreDate(){
+    var outputStringDate = document.getElementById("dateExecution").value
+    var nextDay=new Date(outputStringDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    document.getElementById("dateExecution").value=format(nextDay,'yyyy-MM-dd');
+    grid.addFilter('data_wykonania',format(nextDay,'yyyy-MM-dd') , '=');
+
+}
+function loadData(){
+    var outputStringDate = document.getElementById("dateExecution").value
+    var Day=new Date(outputStringDate);
+    Day.setDate(Day.getDate());
+    document.getElementById("dateExecution").value=format(Day,'yyyy-MM-dd');
+    grid.addFilter('data_wykonania',format(Day,'yyyy-MM-dd') , '=');
+}
+
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
-    new FancyGrid({
+    var currentDay=document.getElementById("dateExecution").value=format(new Date(),'yyyy-MM-dd');
+
+
+
+    grid=new FancyGrid({
         resizable: true,
         renderTo: 'container',
         title: '44 DETAILING - CRM',
         width: 'fit',
         height: 'fit',
+        selModel:'row',
         trackOver: true,
+        filter: true,
 
         data: {
             proxy: {
-                type: 'rest',
-                read:'GET',
-                url: '?page=admin_services'
+                api:{
+                    create:'?page=adminServiceAdd',
+                    read:'?page=admin_services',
+                    update:'?page=adminServiceUpdate',
+                    destroy:'?page=adminServiceDelete'
+                }
+
+
             }
         },
         tbar: [{
+            type:'button',
             text: 'Add',
             action: 'add'
         }, {
-            text: 'Remove',
+            type:'button',
+            text: 'Delete',
             action: 'remove'
         }],
         defaults: {
@@ -27,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
             resizable: true,
             sortable: true,
             editable: true,
+
 
         },
         clicksToEdit: 1,
@@ -47,9 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
             type:'combo',
             data: {
                 proxy: {
-                    type: 'rest',
-                    read:'GET',
-                    url: 'DataCarMarka.php'
+                    url: 'public/js/DataCarMarka.php'
                 }
             }
 
@@ -60,16 +119,15 @@ document.addEventListener("DOMContentLoaded", function() {
             type:'combo',
             data: {
                 proxy: {
-                    type: 'rest',
-                    read:'GET',
-                    url: 'DataCarMarka.php'
+                    url: 'public/js/DataCarModel.php'
                 }
             }
 
         },{
             title: 'Rodzaj usługi',
             index: 'nazwa_uslugi',
-            width: 100
+            width: 100,
+            type:'combo'
         }, {
             title: 'Cena',
             index: 'cena',
@@ -77,15 +135,17 @@ document.addEventListener("DOMContentLoaded", function() {
             spin: true,
             step: 10,
             min: 0,
-            max: 10000,
+            max: 100000,
             format: {
                 inputFn: cenaInputFn
             }
         },{
             title: 'Zapłacone',
             index: 'zaplacone',
-            type:'select',
-            width: 80
+            type:'combo',
+            width: 80,
+            data:['tak','nie']
+
         },{
             title: 'Rodzaj płatności',
             index: 'nazwa_platnosci',
@@ -108,24 +168,26 @@ document.addEventListener("DOMContentLoaded", function() {
             type: 'date',
             width: 90,
             format: {
-                read: 'Y.m.d',
+
+                read: 'Y-m-d',
                 write: 'd/m/Y',
                 edit: 'd/m/Y'
             }
         }]
     });
+
 });
 
 function cenaInputFn(value) {
-    value = value.toString().replace('$', '').replace(/\,/g, '').replace('-', '').replace('.', '');
+    value = value.toString().replace('zł', '').replace(/\,/g, ' ').replace('-', '').replace('.', '');
 
     if (value.length === 0) {
         value = '';
     } else if (value.length > 6) {
         value = value.substr(0, 6);
-        value = '$' + value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+' zł';
     } else {
-        value = '$' + value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        value =value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+ ' zł';
     }
 
     return value;
@@ -167,6 +229,7 @@ function phoneInputFn(value) {
 
     return value;
 }
+
 
 var data = [{
     "position": "Tech Director",

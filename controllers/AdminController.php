@@ -51,17 +51,66 @@ class AdminController extends AppController
         http_response_code(200);
         output($services->getServices());
     }
+    public function insertService():void{
 
-    public function userDelete(): void
+    }
+
+
+    public function carModel(): void
+{
+    $carModel = new CarMapper();
+    header('Content-type: application/json');
+    http_response_code(200);
+    output($carModel->getModel());
+}
+    public function carMarka(): void
     {
-        if (!isset($_POST['id'])) {
+        $carMarka = new CarMapper();
+        header('Content-type: application/json');
+        http_response_code(200);
+        output($carMarka->getMarka());
+    }
+
+
+
+    public function serviceDelete(): void
+    {
+        header('Content-type: application/json');
+        if (!isset($_GET['id'])) {
             http_response_code(404);
             return;
         }
 
-        $user = new UserMapper();
-        $user->delete((int)$_POST['id']);
 
+        $service = new ServiceMapper();
+        $service->delete($_GET['id']);
+        output($service->getServices());
+        http_response_code(200);
+    }
+
+    public function serviceAdd(): void
+    {
+        header('Content-type: application/json');
+        if (!isset($_GET['id'])) {
+            http_response_code(404);
+            return;
+        }
+
+        $service = new ServiceMapper();
+        output($service->add());
+        http_response_code(200);
+    }
+    public function serviceUpdate()
+    {
+        header('Content-type: application/json');
+        if (!isset($_GET['id']) && !isset($_GET['key']) && !isset($_GET['value'])) {
+            http_response_code(404);
+            return;
+        }
+
+        $service = new ServiceMapper();
+        $service->update($_GET['id'],$_GET['key'],$_GET['value']);
+        //output($service->getServices());
         http_response_code(200);
     }
 }
