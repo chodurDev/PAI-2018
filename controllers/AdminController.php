@@ -49,11 +49,9 @@ class AdminController extends AppController
         $services = new ServiceMapper();
         header('Content-type: application/json');
         http_response_code(200);
-        output($services->getServices());
+        output($services->getServices($_GET['data_wykonania']));
     }
-    public function insertService():void{
 
-    }
 
 
     public function carModel(): void
@@ -84,7 +82,7 @@ class AdminController extends AppController
 
         $service = new ServiceMapper();
         $service->delete($_GET['id']);
-        output($service->getServices());
+        output($service->getServices(isset($_GET['data_wykonania'])?:''));
         http_response_code(200);
     }
 
@@ -110,7 +108,13 @@ class AdminController extends AppController
 
         $service = new ServiceMapper();
         $service->update($_GET['id'],$_GET['key'],$_GET['value']);
-        //output($service->getServices());
         http_response_code(200);
+    }
+
+    public function admin_servicesUnregulated(){
+        $services = new ServiceMapper();
+        header('Content-type: application/json');
+        http_response_code(200);
+        output($services->getUnregulatedServices());
     }
 }

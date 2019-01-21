@@ -55,6 +55,10 @@ class Routing
                 'controller' => 'AdminController',
                 'action' => 'adminUnregulated'
             ],
+            'admin_servicesUnregulated' => [
+                'controller' => 'AdminController',
+                'action' => 'admin_servicesUnregulated'
+            ],
             'adminServiceDelete' => [
                 'controller' => 'AdminController',
                 'action' => 'serviceDelete'

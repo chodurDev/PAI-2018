@@ -2,11 +2,13 @@
 <html>
 
 <?php include(dirname(__DIR__).'/head.html'); ?>
-
-<body>
+<script src="/public/js/tabelaEmployee.js"></script>
+<body onload="load()">
 
 <div>
-<center>strona pracownicza</center>
+<center>
+    <div id="container" ></div>
+</center>
 
 
 </div>

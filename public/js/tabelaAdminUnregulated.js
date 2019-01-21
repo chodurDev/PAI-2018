@@ -1,4 +1,8 @@
 var grid;
+
+
+
+
 format = function date2str(x, y) {
     var z = {
         M: x.getMonth() + 1,
@@ -17,54 +21,27 @@ format = function date2str(x, y) {
 }
 
 
-function lessDate(){
-    var outputStringDate = document.getElementById("dateExecution").value
-    var previousDay=new Date(outputStringDate);
-    previousDay.setDate(previousDay.getDate() - 1);
-    document.getElementById("dateExecution").value=format(previousDay,'yyyy-MM-dd');
-    grid.addFilter('data_wykonania',format(previousDay,'yyyy-MM-dd') , '=');
-
-}
-
-function moreDate(){
-    var outputStringDate = document.getElementById("dateExecution").value
-    var nextDay=new Date(outputStringDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-    document.getElementById("dateExecution").value=format(nextDay,'yyyy-MM-dd');
-    grid.addFilter('data_wykonania',format(nextDay,'yyyy-MM-dd') , '=');
-
-}
-function loadData(){
-    var outputStringDate = document.getElementById("dateExecution").value
-    var Day=new Date(outputStringDate);
-    Day.setDate(Day.getDate());
-    document.getElementById("dateExecution").value=format(Day,'yyyy-MM-dd');
-    grid.addFilter('data_wykonania',format(Day,'yyyy-MM-dd') , '=');
-}
 
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    var currentDay=document.getElementById("dateExecution").value=format(new Date(),'yyyy-MM-dd');
 
-
-
+function load(){
     grid=new FancyGrid({
         resizable: true,
         renderTo: 'container',
         title: '44 DETAILING - CRM',
         width: 'fit',
-        height: 'fit',
+        height: 200,
         selModel:'row',
         trackOver: true,
         filter: true,
 
+
         data: {
             proxy: {
                 api:{
-                    create:'?page=adminServiceAdd',
-                    read:'?page=admin_services',
+                    read:'?page=admin_servicesUnregulated',
                     update:'?page=adminServiceUpdate',
                     destroy:'?page=adminServiceDelete'
                 }
@@ -73,10 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         },
         tbar: [{
-            type:'button',
-            text: 'Add',
-            action: 'add'
-        }, {
             type:'button',
             text: 'Delete',
             action: 'remove'
@@ -87,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             resizable: true,
             sortable: true,
             editable: true,
+            height: 200
 
 
         },
@@ -166,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
             title: 'Data wykonania',
             index: 'data_wykonania',
             type: 'date',
-            width: 90,
+            width: 120,
             format: {
 
                 read: 'Y-m-d',
@@ -174,9 +148,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 edit: 'd/m/Y'
             }
         }]
+
     });
 
-});
+};
+//grid=
 
 function cenaInputFn(value) {
     value = value.toString().replace('zł', '').replace(/\,/g, ' ').replace('-', '').replace('.', '');
