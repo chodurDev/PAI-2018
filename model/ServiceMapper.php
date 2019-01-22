@@ -11,14 +11,7 @@ class ServiceMapper
         $this->database = new Database();
     }
     public function getUnregulatedServices(){
-        $sql = "SELECT usluga.id,klient.imie,klient.nazwisko,samochod.marka,samochod.model,rodzaj_uslugi.nazwa_uslugi,rodzaj_uslugi.cena,\n"
-            . "zaplacone,rodzaj_platnosci.nazwa_platnosci,klient.nip,klient.email,uwagi.tresc_uwagi,data_wykonania \n"
-            . "FROM `usluga`\n"
-            . "JOIN klient ON usluga.id_klient=klient.id_klient\n"
-            . "JOIN samochod ON usluga.id_samochod=samochod.id_samochod\n"
-            . "JOIN rodzaj_uslugi ON usluga.id_rodzaj_uslugi=rodzaj_uslugi.id_rodzaj_uslugi\n"
-            . "JOIN rodzaj_platnosci ON usluga.id_rodzaj_platnosci=rodzaj_platnosci.id_rodzaj_platnosci\n"
-            . "JOIN uwagi ON usluga.id_uwagi=uwagi.id_uwagi WHERE usluga.zaplacone='nie' ORDER BY usluga.id DESC ";
+        $sql = "SELECT * FROM services_view WHERE zaplacone='nie' ORDER BY id DESC ";
         try {
             $stmt = $this->database->connect()->prepare($sql);
             $stmt->execute();
@@ -32,14 +25,7 @@ class ServiceMapper
 
     public function getServices($data_wykonania)
     {
-        $sql = "SELECT usluga.id,klient.imie,klient.nazwisko,samochod.marka,samochod.model,rodzaj_uslugi.nazwa_uslugi,rodzaj_uslugi.cena,\n"
-            . "zaplacone,rodzaj_platnosci.nazwa_platnosci,klient.nip,klient.email,uwagi.tresc_uwagi,data_wykonania \n"
-            . "FROM `usluga`\n"
-            . "JOIN klient ON usluga.id_klient=klient.id_klient\n"
-            . "JOIN samochod ON usluga.id_samochod=samochod.id_samochod\n"
-            . "JOIN rodzaj_uslugi ON usluga.id_rodzaj_uslugi=rodzaj_uslugi.id_rodzaj_uslugi\n"
-            . "JOIN rodzaj_platnosci ON usluga.id_rodzaj_platnosci=rodzaj_platnosci.id_rodzaj_platnosci\n"
-            . "JOIN uwagi ON usluga.id_uwagi=uwagi.id_uwagi WHERE usluga.data_wykonania= :data_wykonania ORDER BY usluga.id DESC ";
+        $sql = "SELECT * FROM services_view WHERE data_wykonania= :data_wykonania ORDER BY id DESC ";
         try {
             $stmt = $this->database->connect()->prepare($sql);
             $stmt->bindParam(':data_wykonania',$data_wykonania,PDO::PARAM_STR);
@@ -64,16 +50,9 @@ class ServiceMapper
     }
     public function add()
     {
-        $sql = "SELECT usluga.id,klient.imie,klient.nazwisko,samochod.marka,samochod.model,rodzaj_uslugi.nazwa_uslugi,rodzaj_uslugi.cena,\n"
-            . "zaplacone,rodzaj_platnosci.nazwa_platnosci,klient.nip,klient.email,uwagi.tresc_uwagi,data_wykonania \n"
-            . "FROM `usluga`\n"
-            . "JOIN klient ON usluga.id_klient=klient.id_klient\n"
-            . "JOIN samochod ON usluga.id_samochod=samochod.id_samochod\n"
-            . "JOIN rodzaj_uslugi ON usluga.id_rodzaj_uslugi=rodzaj_uslugi.id_rodzaj_uslugi\n"
-            . "JOIN rodzaj_platnosci ON usluga.id_rodzaj_platnosci=rodzaj_platnosci.id_rodzaj_platnosci\n"
-            . "JOIN uwagi ON usluga.id_uwagi=uwagi.id_uwagi  ORDER BY usluga.id DESC";
+        $sql = "SELECT * FROM services_view ORDER BY id DESC LIMIT 1";
         try {
-            $stmt = $this->database->connect()->prepare('INSERT INTO `usluga` () VALUES ();');
+            $stmt = $this->database->connect()->prepare('INSERT INTO `usluga` () VALUES ();');//TODO zmodyfikować zapytanie aby wstawiało odpowiednie wartosci poczatkowe
             $stmt->execute();
             $stmt = $this->database->connect()->prepare($sql);
             $stmt->execute();

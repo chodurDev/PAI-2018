@@ -68,7 +68,7 @@ function load(){
         title: '44 DETAILING - CRM',
         width: 'fit',
         height: 200,
-        selModel:'row',
+        selModel:'rows',
         trackOver: true,
         filter: true,
 
@@ -106,7 +106,7 @@ function load(){
         },
         clicksToEdit: 1,
         columnLines: true,
-        columnClickData: true,
+        // columnClickData: true,
         columns: [{
             title: 'Imie',
             index: 'imie',
