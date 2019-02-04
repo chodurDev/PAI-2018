@@ -18,10 +18,10 @@ class CarMapper
         $this->database = new Database();
     }
 
-    public function getModel()
+    public function getNazwa_samochod()
     {
         try {
-            $stmt = $this->database->connect()->prepare('SELECT model FROM samochod ;');
+            $stmt = $this->database->connect()->prepare('SELECT nazwa_samochod FROM samochod WHERE id_samochod>0 ;');
             $stmt->execute();
 
             $samochod = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,19 +31,7 @@ class CarMapper
             die( 'sie nie udało: ' . $e->getMessage());
         }
     }
-    public function getMarka()
-    {
-        try {
-            $stmt = $this->database->connect()->prepare('SELECT marka FROM samochod ;');
-            $stmt->execute();
 
-            $samochod = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $samochod;
-        }
-        catch(PDOException $e) {
-            die( 'sie nie udało: ' . $e->getMessage());
-        }
-    }
 
 
 }

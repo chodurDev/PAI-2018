@@ -33,3 +33,11 @@ form.hide-submit input[type="submit"]
 
 }
 
+#logoutBtn{
+    margin-top: 10px;
+    margin-left:90%;
+    position: absolute;
+
+
+}
+

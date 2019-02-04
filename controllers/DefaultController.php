@@ -70,6 +70,6 @@ class DefaultController extends AppController
         session_unset();
         session_destroy();
 
-        $this->render('index', ['text' => 'You have been successfully logged out!']);
+        $this->render('login', ['text' => 'You have been successfully logged out!']);
     }
 }

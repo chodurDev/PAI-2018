@@ -5,11 +5,17 @@
 
 
 <body>
+<div id="logoutBtn" class="row">
+<form action="?page=logout"  method="post">
+    <input  type="submit" class="btn btn-danger" value="Wyloguj">
+</form>
+</div>
 <center>
 <div class="container marketing">
 
     <!-- Three columns of text below the carousel -->
     <div class="row" id="admin-row" >
+
             <div class="col-lg-4">
                 <h2>CRM</h2>
                 <form action="?page=adminCRM" class="hide-submit" method="post">
@@ -29,6 +35,7 @@
             </form>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
+
             <h2>NIEZAPŁACONE</h2>
             <form action="?page=adminUnregulated" class="hide-submit" method="post">
                 <label>
@@ -37,7 +44,9 @@
                 </label>
             </form>
 
+
         </div><!-- /.col-lg-4 -->
+
     </div><!-- /.row -->
 </center>
 

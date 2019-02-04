@@ -95,7 +95,8 @@ class AdminController extends AppController
         }
 
         $service = new ServiceMapper();
-        output($service->add());
+        output($service->add($_GET['data_wykonania']));
+
         http_response_code(200);
     }
     public function serviceUpdate()
@@ -116,5 +117,13 @@ class AdminController extends AppController
         header('Content-type: application/json');
         http_response_code(200);
         output($services->getUnregulatedServices());
+    }
+
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+
+        $this->render('login', ['text' => 'You have been successfully logged out!']);
     }
 }

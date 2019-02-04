@@ -26,7 +26,6 @@ function lessDate(){
     var previousDay=new Date(outputStringDate);
     previousDay.setDate(previousDay.getDate() - 1);
     currentDay=document.getElementById("dateExecution").value=format(previousDay,'yyyy-MM-dd');
-    //grid.addFilter('data_wykonania',format(previousDay,'yyyy-MM-dd') , '=');
     grid.destroy();
   load();
 
@@ -37,7 +36,6 @@ function moreDate(){
     var nextDay=new Date(outputStringDate);
     nextDay.setDate(nextDay.getDate() + 1);
     currentDay=document.getElementById("dateExecution").value=format(nextDay,'yyyy-MM-dd');
-    //grid.addFilter('data_wykonania',format(nextDay,'yyyy-MM-dd') , '=');
     grid.destroy();
    load();
 
@@ -48,8 +46,6 @@ function loadData(){
     var Day=new Date(outputStringDate);
     Day.setDate(Day.getDate());
     currentDay= document.getElementById("dateExecution").value=format(Day,'yyyy-MM-dd');
-    //grid.addFilter('data_wykonania',format(Day,'yyyy-MM-dd') , '=');
-    //grid.hide();
     grid.destroy();
     load();
 
@@ -62,13 +58,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function load(){
+
     grid=new FancyGrid({
         resizable: true,
         renderTo: 'container',
         title: '44 DETAILING - CRM',
         width: 'fit',
         height: 200,
-        selModel:'rows',
+        selModel:'row',
         trackOver: true,
         filter: true,
 
@@ -76,7 +73,7 @@ function load(){
         data: {
             proxy: {
                 api:{
-                    create:'?page=adminServiceAdd',
+                    create:'?page=adminServiceAdd&data_wykonania='+document.getElementById("dateExecution").value,
                     read:'?page=admin_services&data_wykonania='+document.getElementById("dateExecution").value,
                     update:'?page=adminServiceUpdate',
                     destroy:'?page=adminServiceDelete'
@@ -88,60 +85,54 @@ function load(){
         tbar: [{
             type:'button',
             text: 'Add',
-            action: 'add'
+            action: 'add',
+            tip:'dodaje rekord do bazy'
         }, {
             type:'button',
             text: 'Delete',
-            action: 'remove'
+            action: 'remove',
+            tip:'usuwa rekord z bazy'
         }],
         defaults: {
-            type: 'string',
-            width: 75,
             resizable: true,
             sortable: true,
             editable: true,
-            height: 200
-
+            scrollable:true
 
         },
         clicksToEdit: 1,
         columnLines: true,
-        // columnClickData: true,
+        columnClickData: true,
         columns: [{
-            title: 'Imie',
-            index: 'imie',
-            width: 100
-        }, {
-            title: 'Nazwisko',
-            index: 'nazwisko',
-            width: 100
-        }, {
-            title: 'Marka',
-            index: 'marka',
+            title: 'Nazwisko i Imie',
+            index: 'nazwisko_imie',
+            width: 200,
+        },  {
+            title: 'Marka i model',
+            index: 'nazwa_samochod',
             width: 100,
             type:'combo',
             data: {
                 proxy: {
-                    url: 'public/js/DataCarMarka.php'
+                    url: 'public/js/DataCarMarka.php'//todo sprawdzic czy combo przypadkiem nie wyłącza możliwości edytowania komórek!!!
                 }
-            }
-
-        },{
-            title: 'Model',
-            index: 'model',
-            width: 100,
-            type:'combo',
-            data: {
-                proxy: {
-                    url: 'public/js/DataCarModel.php'
-                }
-            }
-
+            },
+            displayKey: 'nazwa_samochod'
         },{
             title: 'Rodzaj usługi',
             index: 'nazwa_uslugi',
             width: 100,
-            type:'combo'
+            type:'combo',
+            data: {
+                proxy: {
+                    url: 'public/js/DataServicesType.php'
+                }
+            },
+            displayKey: 'nazwa_uslugi',
+            format: {
+                inputFn: ServicesTypeInputFn
+            }
+
         }, {
             title: 'Cena',
             index: 'cena',
@@ -163,7 +154,14 @@ function load(){
         },{
             title: 'Rodzaj płatności',
             index: 'nazwa_platnosci',
-            width: 110
+            width: 110,
+            type:"combo",
+            data: {
+                proxy: {
+                    url: 'public/js/DataServicesPaymentType.php'
+                }
+            },
+            displayKey: 'nazwa_platnosci'
         },{
             title: 'Dane do FV(NIP)',
             index: 'nip',
@@ -176,23 +174,12 @@ function load(){
             title: 'Uwagi',
             index: 'tresc_uwagi',
             width: 80
-        },{
-            title: 'Data wykonania',
-            index: 'data_wykonania',
-            type: 'date',
-            width: 120,
-            format: {
-
-                read: 'Y-m-d',
-                write: 'd/m/Y',
-                edit: 'd/m/Y'
-            }
         }]
 
     });
 
 };
-//grid=
+
 
 function cenaInputFn(value) {
     value = value.toString().replace('zł', '').replace(/\,/g, ' ').replace('-', '').replace('.', '');
@@ -206,53 +193,18 @@ function cenaInputFn(value) {
         value =value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')+ ' zł';
     }
 
+
+    return value;
+}
+
+function ServicesTypeInputFn(value) {
+    value = value.toString().substr(0, value.indexOf(" "));
+
     return value;
 }
 
 
 
-function phoneInputFn(value) {
-    value = parseInt(value.replace(/\-/g, ''));
-
-    if (isNaN(value)) {
-        value = '';
-    } else {
-        value = String(value);
-    }
-
-    switch (value.length) {
-        case 0:
-        case 1:
-        case 2:
-            break;
-        case 4:
-        case 5:
-        case 6:
-            value = value.replace(/^(\d{3})/, "$1-");
-            break;
-        case 7:
-        case 8:
-        case 9:
-            value = value.replace(/^(\d{3})(\d{3})/, "$1-$2-");
-            break;
-        case 10:
-            value = value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-            break;
-        default:
-            value = value.substr(0, 10);
-            value = value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-    }
-
-    return value;
-}
 
 
-var data = [{
-    "position": "Tech Director",
-    "imie": "Alexander",
-    "nazwisko": "Brown",
-    "cena": 6000,
-    "phone": "858-490-5002",
-    "birthday": "1966.08.21",
-    "marka":""
-}];
+

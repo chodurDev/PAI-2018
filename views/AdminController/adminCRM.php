@@ -15,6 +15,9 @@
     </div>
     <div id="container" ></div>
 </center>
+<form action="?page=login"  method="post">
+    <input type="submit" class="button-start" value="">
+</form>
 
 </body>
 </html>

@@ -68,40 +68,31 @@ function load(){
         columnLines: true,
         columnClickData: true,
         columns: [{
-            title: 'Imie',
-            index: 'imie',
-            width: 100
+            title: 'Nazwisko i Imie',
+            index: 'nazwisko_imie',
+            width: 200,
+            editable: false
         }, {
-            title: 'Nazwisko',
-            index: 'nazwisko',
-            width: 100
-        }, {
-            title: 'Marka',
-            index: 'marka',
+            title: 'Marka i model',
+            index: 'nazwa_samochod',
             width: 100,
             type:'combo',
             data: {
                 proxy: {
                     url: 'public/js/DataCarMarka.php'
                 }
-            }
-
-        },{
-            title: 'Model',
-            index: 'model',
-            width: 100,
-            type:'combo',
-            data: {
-                proxy: {
-                    url: 'public/js/DataCarModel.php'
-                }
-            }
-
+            },
+            displayKey: 'nazwa_samochod',
+            editable: false
         },{
             title: 'Rodzaj usługi',
             index: 'nazwa_uslugi',
             width: 100,
-            type:'combo'
+            format: {
+                inputFn: ServicesTypeInputFn
+            },
+            editable: false
+
         }, {
             title: 'Cena',
             index: 'cena',
@@ -112,7 +103,8 @@ function load(){
             max: 100000,
             format: {
                 inputFn: cenaInputFn
-            }
+            },
+            editable: false
         },{
             title: 'Zapłacone',
             index: 'zaplacone',
@@ -123,19 +115,23 @@ function load(){
         },{
             title: 'Rodzaj płatności',
             index: 'nazwa_platnosci',
-            width: 110
+            width: 110,
+            editable: false
         },{
             title: 'Dane do FV(NIP)',
             index: 'nip',
-            width: 110
+            width: 110,
+            editable: false
         },{
             title: 'Email',
             index: 'email',
-            width: 80
+            width: 80,
+            editable: false
         },{
             title: 'Uwagi',
             index: 'tresc_uwagi',
-            width: 80
+            width: 80,
+            editable: false
         },{
             title: 'Data wykonania',
             index: 'data_wykonania',
@@ -146,13 +142,14 @@ function load(){
                 read: 'Y-m-d',
                 write: 'd/m/Y',
                 edit: 'd/m/Y'
-            }
+            },
+            editable: false
         }]
 
     });
 
 };
-//grid=
+
 
 function cenaInputFn(value) {
     value = value.toString().replace('zł', '').replace(/\,/g, ' ').replace('-', '').replace('.', '');
@@ -169,50 +166,8 @@ function cenaInputFn(value) {
     return value;
 }
 
-
-
-function phoneInputFn(value) {
-    value = parseInt(value.replace(/\-/g, ''));
-
-    if (isNaN(value)) {
-        value = '';
-    } else {
-        value = String(value);
-    }
-
-    switch (value.length) {
-        case 0:
-        case 1:
-        case 2:
-            break;
-        case 4:
-        case 5:
-        case 6:
-            value = value.replace(/^(\d{3})/, "$1-");
-            break;
-        case 7:
-        case 8:
-        case 9:
-            value = value.replace(/^(\d{3})(\d{3})/, "$1-$2-");
-            break;
-        case 10:
-            value = value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-            break;
-        default:
-            value = value.substr(0, 10);
-            value = value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-    }
+function ServicesTypeInputFn(value) {
+    value = value.toString().substr(0, value.indexOf(" "));
 
     return value;
 }
-
-
-var data = [{
-    "position": "Tech Director",
-    "imie": "Alexander",
-    "nazwisko": "Brown",
-    "cena": 6000,
-    "phone": "858-490-5002",
-    "birthday": "1966.08.21",
-    "marka":""
-}];
