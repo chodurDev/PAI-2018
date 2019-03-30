@@ -16,9 +16,8 @@ class DefaultController extends AppController
 
     public function index()
     {
-        $text = 'Hello there 👋';
-
-        $this->render('index', ['text' => $text]);
+        $user = new UserMapper();
+        $this->render('index', ['user' => $user->getUser($_SESSION['id'])]);
     }
     public function start(){
         $text = '';

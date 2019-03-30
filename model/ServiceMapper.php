@@ -11,7 +11,7 @@ class ServiceMapper
         $this->database = new Database();
     }
     public function getUnregulatedServices(){
-        $sql = "SELECT * FROM services_view WHERE zaplacone='nie' ORDER BY id DESC ";
+        $sql = "SELECT * FROM services_view WHERE zaplacone='nie' ORDER BY data_wykonania DESC ";
         try {
             $stmt = $this->database->connect()->prepare($sql);
             $stmt->execute();
@@ -55,9 +55,9 @@ class ServiceMapper
             die( 'sie nie udało: ' . $e->getMessage());
         }
     }
-    public function getServicesPaymentType()
+    public function getServicesTypeCount($from,$to)
     {
-        $sql = "SELECT nazwa_platnosci from rodzaj_platnosci where id_rodzaj_platnosci>0 ";
+        $sql = "SELECT rodzaj_uslugi.nazwa_uslugi,COUNT(usluga.id_rodzaj_uslugi) liczba_wykonanych_uslug,SUM(usluga.cena) suma_kwot_platnosci FROM `usluga`LEFT join rodzaj_uslugi on usluga.id_rodzaj_uslugi=rodzaj_uslugi.id_rodzaj_uslugi WHERE usluga.id_rodzaj_uslugi > 0 AND data_wykonania BETWEEN '".$from."' AND '".$to."' GROUP by rodzaj_uslugi.nazwa_uslugi ";
 
 
         try {
@@ -70,8 +70,53 @@ class ServiceMapper
             die( 'sie nie udało: ' . $e->getMessage());
         }
     }
+    public function getServicesPaymentType()
+    {
+        $sql = "SELECT nazwa_platnosci from rodzaj_platnosci where id_rodzaj_platnosci>0 ";
 
 
+
+        try {
+            $stmt = $this->database->connect()->prepare($sql);
+            $stmt->execute();
+            $servicesType = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $servicesType;
+        }
+        catch(PDOException $e) {
+            die( 'sie nie udało: ' . $e->getMessage());
+        }
+    }
+    public function getServicesPaymentTypeCount($from,$to)
+    {
+        $sql = "SELECT rodzaj_platnosci.nazwa_platnosci,COUNT(usluga.id_rodzaj_platnosci) liczba_wykonanych_platnosci,SUM(usluga.cena) suma_kwot_platnosci FROM `usluga`LEFT join rodzaj_platnosci on usluga.id_rodzaj_platnosci=rodzaj_platnosci.id_rodzaj_platnosci WHERE usluga.id_rodzaj_platnosci > 0 AND data_wykonania BETWEEN '".$from."' AND '".$to."'  GROUP by rodzaj_platnosci.nazwa_platnosci";
+
+
+        try {
+            $stmt = $this->database->connect()->prepare($sql);
+            $stmt->execute();
+            $servicesPaymentType = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $servicesPaymentType;
+        }
+        catch(PDOException $e) {
+            die( 'sie nie udało: ' . $e->getMessage());
+        }
+    }
+
+    public function getServicesPaid($from,$to)
+    {
+        $sql = "SELECT zaplacone,COUNT(usluga.id) liczba_zaplaconych,SUM(usluga.cena) kwota_zaplaconych FROM `usluga` where zaplacone<>'wprowadz dane' AND data_wykonania BETWEEN '".$from."' AND '".$to."' GROUP BY zaplacone";
+
+
+        try {
+            $stmt = $this->database->connect()->prepare($sql);
+            $stmt->execute();
+            $servicesPaid = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $servicesPaid;
+        }
+        catch(PDOException $e) {
+            die( 'sie nie udało: ' . $e->getMessage());
+        }
+    }
     public function delete($id): void
     {
         try {
@@ -83,7 +128,7 @@ class ServiceMapper
             die();
         }
     }
-    public function add($data_wykonania)
+    public function add($data_wykonania)//todo spróbowac naprawić wyswietlania podczas dodawania jeśli nie zostanie ani jeden element danego dnia
     {
         $sql = "SELECT * FROM services_view ORDER BY id DESC LIMIT 1";
         try {
@@ -149,12 +194,15 @@ class ServiceMapper
                 $stmt->execute();
                 $proba = $stmt->fetch(PDO::FETCH_ASSOC);
                 echo "sql_one " . $sql_one . "\n";
-                if ($proba['id_' . $tabela_nazwa] == 0) {
+
+                if($proba['id_' . $tabela_nazwa] == 0){
                         $stmt = $this->database->connect()->prepare($sql_two);
                         $stmt->execute();
                         $proba2 = $stmt->fetch(PDO::FETCH_ASSOC);
                         echo "sql_two " . $sql_two . "\n";
+
                         if ($proba2 == false) {
+                            echo "robimy insercik i updejcik\n";
                                 $stmt = $this->database->connect()->prepare($sqlInsert);
                                 $stmt->execute();
                                 $stmt = $this->database->connect()->prepare($sqlUpdateUsluga);
@@ -166,14 +214,15 @@ class ServiceMapper
                             $stmt->execute();
                         }
 
-                }else {
-                        if($key=='nazwisko_imie') {
+                }else{
+                        if($tabela_nazwa=='klient') {
                             $sql = "UPDATE " . $tabela_nazwa . " SET " . $key . "=" . "'" . $value . "' WHERE id_" . $tabela_nazwa . " = " . $proba['id_' . $tabela_nazwa] . ";";
                             echo "sql_update " . $sql . "\n";
                             $stmt = $this->database->connect()->prepare($sql);
                             $stmt->execute();
                         }
                         $stmt = $this->database->connect()->prepare($sqlUpdateUsluga);
+
                         $stmt->execute();
                         echo $sqlUpdateUsluga;
 
@@ -192,7 +241,7 @@ class ServiceMapper
         }
     }
 
-
+//todo zrobic trigger jezeli  po usunieciu pustego rekordu nie bedzie  rekordu na dany dzien to utworzyc taki pusty rekord w tabeli uslugi
 
 
 }

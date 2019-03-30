@@ -68,6 +68,7 @@ function load(){
         selModel:'row',
         trackOver: true,
         filter: true,
+        theme: 'gray',
 
 
         data: {
@@ -107,10 +108,13 @@ function load(){
             title: 'Nazwisko i Imie',
             index: 'nazwisko_imie',
             width: 200,
+            cellTip:'podpowiedz'
+
         },  {
             title: 'Marka i model',
             index: 'nazwa_samochod',
             width: 100,
+            editable:true,
             type:'combo',
             data: {
                 proxy: {
@@ -118,6 +122,7 @@ function load(){
                 }
             },
             displayKey: 'nazwa_samochod'
+
         },{
             title: 'Rodzaj usługi',
             index: 'nazwa_uslugi',
@@ -175,10 +180,23 @@ function load(){
             index: 'tresc_uwagi',
             width: 80
         }]
+        // events: [{
+        //     set: function(grid, o){
+        //         if (o.value =='wprowadz dane'||o.value.empty()) {
+        //             o.style = {
+        //                 color: '#E46B67'
+        //             };
+        //         } else {
+        //             o.style = {
+        //                 color: '#65AE6E'
+        //             };
+        //         }
+        //
+        //     }}]
 
     });
 
-};
+}
 
 
 function cenaInputFn(value) {
@@ -198,9 +216,30 @@ function cenaInputFn(value) {
 }
 
 function ServicesTypeInputFn(value) {
-    value = value.toString().substr(0, value.indexOf(" "));
 
-    return value;
+    value = value.toString().substr(0, value.indexOf(" "));
+// value.style = {
+//     color: '#E46B67'
+// };
+        return value;
+}
+
+
+function NieWypelnione(o) {
+
+    if (o.value =='wprowadz dane'||o.value.empty()) {
+        o.style = {
+            color: '#E46B67'
+        };
+    } else {
+        o.style = {
+            color: '#65AE6E'
+        };
+    }
+
+
+
+    return o;
 }
 
 

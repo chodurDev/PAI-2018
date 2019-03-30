@@ -24,22 +24,24 @@ format = function date2str(x, y) {
 
 
 function load(){
+    var currentDay=format(new Date(), 'yyyy-MM-dd');
     grid=new FancyGrid({
         resizable: true,
         renderTo: 'container',
         title: '44 DETAILING - CRM',
         width: 'fit',
-        height: 200,
+        height: 'fit',
         selModel:'row',
         trackOver: true,
         filter: true,
+        theme: 'gray',
 
 
         data: {
             proxy: {
                 api:{
-                    create:'?page=adminServiceAdd',
-                    read:'?page=admin_services&data_wykonania='+format(new Date(), 'yyyy-MM-dd'),
+                    create:'?page=adminServiceAdd&data_wykonania='+currentDay,
+                    read:'?page=admin_services&data_wykonania='+currentDay,
                     update:'?page=adminServiceUpdate',
                     destroy:'?page=adminServiceDelete'
                 }
@@ -50,11 +52,13 @@ function load(){
         tbar: [{
             type:'button',
             text: 'Add',
-            action: 'add'
+            action: 'add',
+            tip:'dodaje rekord do bazy'
         }, {
             type:'button',
             text: 'Delete',
-            action: 'remove'
+            action: 'remove',
+            tip:'usuwa rekord z bazy'
         }, {
             type: 'date',
             emptyText: format(new Date(), 'yyyy-MM-dd'),
@@ -74,33 +78,24 @@ function load(){
         columnLines: true,
         columnClickData: true,
         columns: [{
-            title: 'Imie',
-            index: 'imie',
-            width: 100
-        }, {
-            title: 'Nazwisko',
-            index: 'nazwisko',
-            width: 100
-        }, {
-            title: 'Marka',
-            index: 'marka',
+            title: 'Nazwisko i Imie',
+            index: 'nazwisko_imie',
+            width: 200
+
+        },  {
+            title: 'Marka i model',
+            index: 'nazwa_samochod',
             width: 100,
+            editable:true,
             type:'combo',
             data: {
                 proxy: {
                     url: 'public/js/DataCarMarka.php'
                 }
-            }
-
-        },{
-            title: 'Model',
-            index: 'model',
-            width: 100,
-            type:'combo',
-            data: {
-                proxy: {
-                    url: 'public/js/DataCarModel.php'
-                }
+            },
+            displayKey: 'nazwa_samochod',
+            format: {
+                inputFn: CarModelInputFn
             }
 
         },{
@@ -108,7 +103,16 @@ function load(){
             index: 'nazwa_uslugi',
             width: 100,
             type:'combo',
-            data: ['pranie','komplet']
+            data: {
+                proxy: {
+                    url: 'public/js/DataServicesType.php'
+                }
+            },
+            displayKey: 'nazwa_uslugi',
+            format: {
+                inputFn: ServicesTypeInputFn
+            }
+
         }, {
             title: 'Cena',
             index: 'cena',
@@ -130,7 +134,14 @@ function load(){
         },{
             title: 'Rodzaj płatności',
             index: 'nazwa_platnosci',
-            width: 110
+            width: 110,
+            type:"combo",
+            data: {
+                proxy: {
+                    url: 'public/js/DataServicesPaymentType.php'
+                }
+            },
+            displayKey: 'nazwa_platnosci'
         },{
             title: 'Dane do FV(NIP)',
             index: 'nip',
@@ -143,17 +154,6 @@ function load(){
             title: 'Uwagi',
             index: 'tresc_uwagi',
             width: 80
-        },{
-            title: 'Data wykonania',
-            index: 'data_wykonania',
-            type: 'date',
-            width: 120,
-            format: {
-
-                read: 'Y-m-d',
-                write: 'd/m/Y',
-                edit: 'd/m/Y'
-            }
         }]
 
     });
@@ -176,6 +176,23 @@ function cenaInputFn(value) {
     return value;
 }
 
+function ServicesTypeInputFn(value) {
+
+    value = value.toString().substr(0, value.indexOf(" "));
+// value.style = {
+//     color: '#E46B67'
+// };
+    return value;
+}
+
+function CarModelInputFn(value) {
+
+    value = value.toString();
+// value.style = {
+//     color: '#E46B67'
+// };
+    return value;
+}
 
 
 

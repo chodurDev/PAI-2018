@@ -21,7 +21,7 @@ class CarMapper
     public function getNazwa_samochod()
     {
         try {
-            $stmt = $this->database->connect()->prepare('SELECT nazwa_samochod FROM samochod WHERE id_samochod>0 ;');
+            $stmt = $this->database->connect()->prepare('SELECT nazwa_samochod FROM samochod  ;'); #WHERE id_samochod>0
             $stmt->execute();
 
             $samochod = $stmt->fetchAll(PDO::FETCH_ASSOC);

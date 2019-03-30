@@ -70,6 +70,18 @@ class Routing
             'adminServiceUpdate' => [
                 'controller' => 'AdminController',
                 'action' => 'serviceUpdate'
+            ],
+            'ServiceTypeCount' => [
+                'controller' => 'AdminController',
+                'action' => 'serviceTypeCount'
+            ],
+            'ServicePaymentTypeCount' => [
+                'controller' => 'AdminController',
+                'action' => 'servicePaymentTypeCount'
+            ],
+            'ServicePaid' => [
+                'controller' => 'AdminController',
+                'action' => 'servicePaid'
             ]
 
         ];

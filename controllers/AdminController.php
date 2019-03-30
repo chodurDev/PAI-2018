@@ -118,6 +118,31 @@ class AdminController extends AppController
         http_response_code(200);
         output($services->getUnregulatedServices());
     }
+    public function serviceTypeCount(){
+        $servicesTypeCount = new ServiceMapper();
+
+        header('Content-type: application/json');
+        http_response_code(200);
+
+        output($servicesTypeCount->getServicesTypeCount($_GET['from'],$_GET['to']));
+    }
+    public function servicePaymentTypeCount(){
+        $servicesPaymentTypeCount = new ServiceMapper();
+
+        header('Content-type: application/json');
+        http_response_code(200);
+
+        output($servicesPaymentTypeCount->getServicesPaymentTypeCount($_GET['from'],$_GET['to']));
+    }
+    public function servicePaid(){
+        $servicesPaid = new ServiceMapper();
+
+        header('Content-type: application/json');
+        http_response_code(200);
+
+        output($servicesPaid->getServicesPaid($_GET['from'],$_GET['to']));
+    }
+
 
     public function logout()
     {

@@ -1,41 +1,16 @@
-var grid;
 
 
-
-
-format = function date2str(x, y) {
-    var z = {
-        M: x.getMonth() + 1,
-        d: x.getDate(),
-        h: x.getHours(),
-        m: x.getMinutes(),
-        s: x.getSeconds()
-    };
-    y = y.replace(/(M+|d+|h+|m+|s+)/g, function(v) {
-        return ((v.length > 1 ? "0" : "") + eval('z.' + v.slice(-1))).slice(-2)
-    });
-
-    return y.replace(/(y+)/g, function(v) {
-        return x.getFullYear().toString().slice(-v.length)
-    });
-}
-
-
-
-
-
-
-
-function load(){
-    grid=new FancyGrid({
+document.addEventListener("DOMContentLoaded", function() {
+    new FancyGrid({
         resizable: true,
         renderTo: 'container',
-        title: '44 DETAILING - CRM',
+        title: '44 DETAILING - NIEZAPŁACONE',
         width: 'fit',
-        height: 200,
+        height: 'fit',
         selModel:'row',
         trackOver: true,
         filter: true,
+        theme: 'gray',
 
 
         data: {
@@ -59,7 +34,7 @@ function load(){
             width: 75,
             resizable: true,
             sortable: true,
-            editable: true,
+            editable: false,
             height: 200
 
 
@@ -70,8 +45,8 @@ function load(){
         columns: [{
             title: 'Nazwisko i Imie',
             index: 'nazwisko_imie',
-            width: 200,
-            editable: false
+            width: 200
+
         }, {
             title: 'Marka i model',
             index: 'nazwa_samochod',
@@ -82,56 +57,53 @@ function load(){
                     url: 'public/js/DataCarMarka.php'
                 }
             },
-            displayKey: 'nazwa_samochod',
-            editable: false
+            displayKey: 'nazwa_samochod'
+
         },{
             title: 'Rodzaj usługi',
             index: 'nazwa_uslugi',
             width: 100,
             format: {
                 inputFn: ServicesTypeInputFn
-            },
-            editable: false
+            }
+
 
         }, {
             title: 'Cena',
             index: 'cena',
             type: 'number',
-            spin: true,
-            step: 10,
-            min: 0,
-            max: 100000,
             format: {
                 inputFn: cenaInputFn
-            },
-            editable: false
+            }
+
         },{
             title: 'Zapłacone',
             index: 'zaplacone',
             type:'combo',
             width: 80,
-            data:['tak','nie']
+            data:['tak','nie'],
+            editable:true
 
         },{
             title: 'Rodzaj płatności',
             index: 'nazwa_platnosci',
-            width: 110,
-            editable: false
+            width: 110
+
         },{
             title: 'Dane do FV(NIP)',
             index: 'nip',
-            width: 110,
-            editable: false
+            width: 110
+
         },{
             title: 'Email',
             index: 'email',
-            width: 80,
-            editable: false
+            width: 80
+
         },{
             title: 'Uwagi',
             index: 'tresc_uwagi',
-            width: 80,
-            editable: false
+            width: 80
+
         },{
             title: 'Data wykonania',
             index: 'data_wykonania',
@@ -142,14 +114,12 @@ function load(){
                 read: 'Y-m-d',
                 write: 'd/m/Y',
                 edit: 'd/m/Y'
-            },
-            editable: false
+            }
+
         }]
 
     });
-
-};
-
+});
 
 function cenaInputFn(value) {
     value = value.toString().replace('zł', '').replace(/\,/g, ' ').replace('-', '').replace('.', '');
@@ -171,3 +141,4 @@ function ServicesTypeInputFn(value) {
 
     return value;
 }
+

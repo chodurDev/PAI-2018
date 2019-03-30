@@ -1,9 +1,9 @@
 body {
     background-repeat: no-repeat;
     background-position:  center;
-    background-attachment: fixed;
+    /*background-attachment: scroll;*/
     background-image: url("44_Detailing_logo.jpg");
-    /*background-position-y: 5px ;*/
+    background-position-y: -5px ;
     background-size: auto;
 
 }
@@ -16,8 +16,8 @@ body {
     opacity: 0.5;
     position: absolute;
     left: 50%;
-    top: 50px;
-    transform: translate(-50%, 0%);
+    top: 50%;
+    transform: translate(-50%, 50%);
 
 
 }
