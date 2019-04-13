@@ -42,10 +42,9 @@ form.hide-submit input[type="submit"]
 }
 
 @media only screen and (max-width:1280px) {
-    /* For notebooks */
+    /* For mobile phones: */
     body {
-        background-size:70%;
-
+        background-size:100%;
     }
 }
 
