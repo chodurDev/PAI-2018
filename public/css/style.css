@@ -1,10 +1,10 @@
 body {
     background-repeat: no-repeat;
-    background-position:  center;
+    background-position:  top;
     /*background-attachment: scroll;*/
     background-image: url("44_Detailing_logo.jpg");
     background-position-y: -5px ;
-    background-size: auto;
+    /*background-size: 100%;*/
 
 }
 .button-start{
@@ -39,5 +39,13 @@ form.hide-submit input[type="submit"]
     position: absolute;
 
 
+}
+
+@media only screen and (max-width:1280px) {
+    /* For notebooks */
+    body {
+        background-size:70%;
+
+    }
 }
 
